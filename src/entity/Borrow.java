@@ -1,7 +1,7 @@
 package entity;
 
 /**
- * Borrow   已借图书
+ * Borrow  已借图书
  * @author ZQ
  */
 public class Borrow {
