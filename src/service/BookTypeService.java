@@ -16,7 +16,7 @@ public class BookTypeService {
     BookTypeDao bookTypeDao = new BookTypeDao();
 
     /**
-     * 
+     * 添加图书类别记录
      * @param bookTypeName
      * @param bookTypeDesc
      * @return
@@ -26,24 +26,21 @@ public class BookTypeService {
         bookType.setBookTypeName(bookTypeName);
         bookType.setBookTypeDesc(bookTypeDesc);
 
-        if (bookTypeDao.add(bookType)) {
-            return true;
-        }
-        return false;
+        return bookTypeDao.add(bookType);
     }
 
     /**
-     * 
+     * 显示全部
      * @return
      */
     public List<BookType> list() {
         List<BookType> bs = bookTypeDao.list();
-        Collections.sort(bs,(c1,c2)->c1.getId() - c2.getId());
+        bs.sort((c1, c2) -> c1.getId() - c2.getId());
         return bs;
     }
 
     /**
-     * 
+     * 部分搜索
      * @param search
      * @return
      */
@@ -52,7 +49,7 @@ public class BookTypeService {
     }
 
     /**
-     * 
+     * 修改数据
      * @param id
      * @param typeName
      * @param typeDesc
@@ -68,7 +65,7 @@ public class BookTypeService {
     }
 
     /**
-     * 
+     * 删除数据
      * @param id
      */
     public void delete(int id) {
@@ -76,7 +73,7 @@ public class BookTypeService {
     }
 
     /**
-     * 
+     * 根据类型id获取bookType对象
      * @param id
      * @return
      */

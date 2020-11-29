@@ -8,8 +8,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * 普通用户界面
+ * @author ZQ
+ */
 public class UserFrame extends JFrame {
     
+    //单例模式
     public static UserFrame instance = new UserFrame();
     
     public JMenuBar menuBar = new JMenuBar();
@@ -40,7 +45,7 @@ public class UserFrame extends JFrame {
         System.out.println("窗体开始建立");
         //设置窗体信息
         System.out.println("窗体信息建立");
-        setTitle("用户界面   当前用户：" + LoginFrame.user.getId());
+        setTitle("用户界面   当前用户编号：" + LoginFrame.user.getId());
         setSize(900,700);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
@@ -114,7 +119,7 @@ public class UserFrame extends JFrame {
         editPassItem.addActionListener(listener);
         sysDescItem.addActionListener(listener);
     }
-
+    
     public static void main(String[] args) {
         
     }

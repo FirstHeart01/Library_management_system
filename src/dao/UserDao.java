@@ -21,7 +21,7 @@ public class UserDao {
      * @return
      */
     public static boolean login(String userName, String password) {
-       String sql = "SELECT * FROM user WHERE id = ? AND password = ?";
+       String sql = "SELECT * FROM user WHERE userName = ? AND password = ?";
        try {
            Connection connection = DbConn.getconn();
            PreparedStatement ps = connection.prepareStatement(sql);
@@ -48,7 +48,7 @@ public class UserDao {
      * @return
      */
     public static boolean isAdmin(String userName) {
-        String sql = "SELECT * FROM user WHERE id = ?";
+        String sql = "SELECT * FROM user WHERE userName = ?";
         try {
             Connection connection = DbConn.getconn();
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -59,11 +59,7 @@ public class UserDao {
             
             if(rs.next()) {
                 int isAdmin = rs.getInt("admin");
-                if(isAdmin == 1) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return isAdmin == 1;
             }
             return false;
         } catch (SQLException e) {
@@ -74,24 +70,24 @@ public class UserDao {
 
     /**
      * 
-     * @param id
+     * @param userName
      * @return
      */
-    public static User getUser(int id) {
-        String sql = "SELECT * FROM user WHERE id = ?";
+    public static User getUser(String userName) {
+        String sql = "SELECT * FROM user WHERE userName = ?";
         try {
             Connection connection = DbConn.getconn();
             PreparedStatement ps = connection.prepareStatement(sql);
             
-            ps.setInt(1,id);
+            ps.setString(1,userName);
             
             ResultSet rs = ps.executeQuery();
             
             if(rs.next()) {
                 User user = new User();
                 
-                user.setId(id);
-                user.setUserName(rs.getString(2));  
+                user.setId(rs.getInt(1));
+                user.setUserName(userName);  
                 user.setPassword(rs.getString(3));
                 user.setAdmin(rs.getInt(4));
                 

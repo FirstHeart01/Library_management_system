@@ -25,19 +25,24 @@ public class BookService {
         book.setBookTypeId(bookType.getId());
         book.setBookCount(bookCount);
         book.setBookDesc(bookDesc);
-        
-        if(bookDao.add(book)) {
-            return true;
-        }
-        return false;
-    }
-    
-    public List<Book> list() {
-        return bookDao.list();
+
+        return bookDao.add(book);
     }
 
     /**
-     * 
+     * 显示全部
+     * @return
+     */
+    public List<Book> list() {
+        return bookDao.list();
+    }
+    
+    public List<Book> list(String search1, String search2) {
+        return bookDao.list(search1,search2);
+    }
+
+    /**
+     * 更新修改
      * @param id
      * @param bookName
      * @param author
@@ -62,7 +67,7 @@ public class BookService {
     }
 
     /**
-     * 
+     * 删除
      * @param id
      */
     public void delete(int id ) {

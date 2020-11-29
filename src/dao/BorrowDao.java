@@ -4,10 +4,7 @@ import db.DbConn;
 import entity.Borrow;
 import view.frame.LoginFrame;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +22,7 @@ public class BorrowDao {
         String sql = "INSERT INTO borrow VALUES(?,?,?,?,?)";
         try {
             Connection connection = DbConn.getconn();
-            PreparedStatement ps = connection.prepareStatement(sql);
+            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             ps.setInt(1,borrow.getUserId());
             ps.setInt(2,borrow.getBookId());
@@ -36,10 +33,7 @@ public class BorrowDao {
             ps.executeUpdate();
 
             ResultSet rs = ps.getGeneratedKeys();
-            if(rs.next()) {
-                return true;
-            }
-            return false;
+            return rs.next();
         } catch (SQLException e) {
             e.printStackTrace();
         }

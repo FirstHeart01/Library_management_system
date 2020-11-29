@@ -3,10 +3,7 @@ package dao;
 import db.DbConn;
 import entity.BookType;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +21,7 @@ public class BookTypeDao {
         String sql = "INSERT INTO booktype values(null,?,?)";
         try {
             Connection connection = DbConn.getconn();
-            PreparedStatement ps = connection.prepareStatement(sql);
+            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             ps.setString(1,bookType.getBookTypeName());
             ps.setString(2,bookType.getBookTypeDesc());
@@ -33,19 +30,26 @@ public class BookTypeDao {
 
             ResultSet rs = ps.getGeneratedKeys();
 
-            if(rs.next()) {
-                return true;
-            }
-            return false;
+            return rs.next();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
     }
 
+    /**
+     * 显示全部
+     * @return
+     */
     public List<BookType> list() {
         return list("");
     }
+
+    /**
+     * 部分搜索
+     * @param search
+     * @return
+     */
     public List<BookType> list(String search) {
         List<BookType> bs = new ArrayList<>();
         String sql = "SELECT * FROM booktype";
@@ -148,7 +152,7 @@ public class BookTypeDao {
     }
 
     /**
-     *
+     * 根据id返回对象
      * @param id
      * @return
      */

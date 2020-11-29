@@ -8,6 +8,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * 管理员界面
+ * @author ZQ
+ */
 public class AdminFrame extends JFrame {
     
     //单例
@@ -16,7 +20,7 @@ public class AdminFrame extends JFrame {
     //菜单栏
     public JMenuBar menuBar = new JMenuBar();
 
-    //图书类别管理 菜单
+    //图书类别管理菜单
     public JMenu typeMenu = new JMenu("图书类别管理");
     public JMenuItem addTypeItem = new JMenuItem("图书类别添加");
     public JMenuItem editTypeItem = new JMenuItem("图书类别维护");
@@ -47,7 +51,7 @@ public class AdminFrame extends JFrame {
     
     public AdminFrame() {
         //设置窗体信息
-        setTitle("管理界面   当前管理员：" + LoginFrame.user.getUserName());
+        setTitle("管理界面   当前管理员编号：" + LoginFrame.user.getId());
         setSize(900,700);
         this.setLocationRelativeTo(null);
         this.setResizable(false);   

@@ -2,10 +2,7 @@ package dao;
 
 import db.DbConn;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +23,7 @@ public class BookDao {
         Connection connection = DbConn.getconn();
         String sql ="INSERT INTO book VALUES (null,?,?,?,?,?,?)";
         try {
-            PreparedStatement ps = connection.prepareStatement(sql);
+            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1,book.getBookName());
             ps.setString(2, book.getBookAuthor());
             ps.setString(3, book.getBookPrice());
@@ -38,35 +35,37 @@ public class BookDao {
 
             ResultSet rs = ps.getGeneratedKeys();
 
-            if(rs.next()) {
-                return true;
-            }
-            return false;
+            return rs.next();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
     }
 
-    public List<Book> list() {
-        return list("");
-    }
-
     /**
      * 查询所有书籍
-     * @param search
      * @return
      */
-    public List<Book> list(String search) {
+    public List<Book> list() {
+        return list("","");
+    }
+    
+    
+    public List<Book> list(String search1,String search2) {
         List<Book> bs = new ArrayList<>();
 
         String sql = "SELECT * FROM book";
 
         //判断输入框是否为空，不为空则追加sql语句
-        if(0 != search.length()) {
-            sql += " WHERE bookTypeName LIKE '%" + search +"%'";
+        if(0 != search1.length() && 0 == search2.length()) {
+            sql += " WHERE bookName LIKE '%" + search1 +"%'";
         }
-
+        if(0 == search1.length() && 0 != search2.length()) {
+            sql += " WHERE bookAuthor LIKE '%" + search2 +"%'";
+        }
+        if(0 != search1.length() && 0 != search2.length()) {
+            sql += " WHERE bookName LIKE '%" + search1 +"%' AND bookAuthor LIKE '%" + search2 + "%'";
+        }
         try {
             Connection connection = DbConn.getconn();
             PreparedStatement ps = connection.prepareStatement(sql);

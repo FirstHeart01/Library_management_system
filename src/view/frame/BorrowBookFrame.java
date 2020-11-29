@@ -15,12 +15,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
+ * 图书借阅界面
  * @author ZQ
  */
 public class BorrowBookFrame extends JFrame {
         
+    //单例模式
     public static BorrowBookFrame instance = new BorrowBookFrame();
     
+    //service层
     BorrowService service = new BorrowService();
     
     //创建表格数据源
@@ -159,7 +162,7 @@ public class BorrowBookFrame extends JFrame {
                 }
                 
                 //确认借阅操作
-                Book book = new Book();
+                Book book = getSelectBook();
                 
                 boolean bool = service.add(book);
                 if(bool) {

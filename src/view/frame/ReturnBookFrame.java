@@ -11,12 +11,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
+ * 图书归还界面
  * @author ZQ
  */
 public class ReturnBookFrame extends JFrame {
     
+    //单例模式
     public static ReturnBookFrame instance = new ReturnBookFrame();
     
+    //service层
     BorrowService service = new BorrowService();
     
     //创建数据源
@@ -34,47 +37,53 @@ public class ReturnBookFrame extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);    
         
-        setIconImage(Toolkit.getDefaultToolkit().getImage(LoginFrame.class.getResource("/images/归还.png"))); 
-        
+        //设置图标
+        setIconImage(Toolkit.getDefaultToolkit().getImage(LoginFrame.class.getResource("/images/归还.png")));
+
+        //初始化面板
         JPanel contentPanel = new JPanel();
         contentPanel.setLayout(new FlowLayout(FlowLayout.CENTER,20,10));
         setContentPane(contentPanel);
         contentPanel.setBorder(new EmptyBorder(0,30,10,30));
-        
+
+        //标签、输入框面板
         JPanel searchPanel = new JPanel();
         searchPanel.setLayout(new FlowLayout(FlowLayout.CENTER,15,20));
         searchPanel.setPreferredSize(new Dimension(getWidth(), 70));
         contentPanel.add(searchPanel);
-        
+
+        //创建图书名称标签
         JLabel labelBookName = new JLabel("点击查询借阅的图书");
         labelBookName.setFont(new Font("微软雅黑",Font.BOLD,20));
         searchPanel.add(labelBookName);
-        
+        //创建按钮
         searchButton = new JButton("查询所有");
         searchButton.setIcon(new ImageIcon(LoginFrame.class.getResource("/images/search-icon.png")));
         searchButton.setPreferredSize(new Dimension(150,40));
         searchPanel.add(searchButton);
-        
+
+        //创建表格面板
         JPanel tablePanel = new JPanel();
         contentPanel.add(tablePanel);
-        
+        //创建表格
         table = new JTable(btm);
         JScrollPane sp = new JScrollPane(table);
         sp.setPreferredSize(new Dimension(750,180));    
         add(sp);
-        
-        
+
+        //创建按钮面板
         JPanel returnPanel = new JPanel();
         contentPanel.add(returnPanel);
-        
+
+        //创建确认归还按钮
         returnButton = new JButton("确认归还");
         returnButton.setIcon(new ImageIcon(LoginFrame.class.getResource("/images/ADD.png")));
         returnButton.setPreferredSize(new Dimension(180,40));   
         returnPanel.add(returnButton);
-        
-        
+
+        //添加归还按钮事件
         addReturnListener();
-        
+        //设置窗体可见性
         setVisible(true);
     }
 
@@ -97,7 +106,7 @@ public class ReturnBookFrame extends JFrame {
     
 
     /**
-     * 
+     * 添加归还按钮事件
      */
     public void addReturnListener() {
        returnButton.addActionListener(new ActionListener() {
@@ -112,6 +121,7 @@ public class ReturnBookFrame extends JFrame {
                    return;
                }
                
+               //确认归还操作
                Borrow borrow = getSelectBook();
                
                service.delete(borrow);

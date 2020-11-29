@@ -2,6 +2,7 @@ package view.frame;
 
 import dao.UserDao;
 import entity.User;
+import view.listener.JTextFieldHintListener;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -21,10 +22,8 @@ public class LoginFrame extends JFrame {
     //当前用户
     public static User user;
 
-    //组件
-    private JPanel contentPanel;
-    private JTextField usernameField;
-    private JPasswordField passwordField;
+    private final JTextField usernameField;
+    private final JPasswordField passwordField;
 
     public LoginFrame() {
         //设置窗口基本信息
@@ -38,11 +37,12 @@ public class LoginFrame extends JFrame {
         setIconImage(Toolkit.getDefaultToolkit().getImage(LoginFrame.class.getResource("/images/Bookicon.png")));
 
         //初始化面板
-        contentPanel = new JPanel();
+        //组件
+        JPanel contentPanel = new JPanel();
         contentPanel.setLayout(new FlowLayout(FlowLayout.CENTER,0,50));
         setContentPane(contentPanel);
         contentPanel.setBorder(new EmptyBorder(20,100,10,100));
-
+        contentPanel.setFocusable(true);
 
         //标题面板
         JPanel titlePanel = new JPanel();
@@ -64,10 +64,11 @@ public class LoginFrame extends JFrame {
         idLabel.setFont(new Font("微软雅黑",Font.BOLD,20));
         fieldPanel.add(idLabel);
         //创建用户名输入框
-        JTextField idField = new JTextField();
-        idField.setPreferredSize(new Dimension(200,30));
-        idField.setFont(new Font("微软雅黑",Font.BOLD,20)); 
-        fieldPanel.add(idField);
+        usernameField = new JTextField();
+        usernameField.setPreferredSize(new Dimension(200,30));
+        usernameField.setFont(new Font("微软雅黑",Font.BOLD,20)); 
+        usernameField.addFocusListener(new JTextFieldHintListener(usernameField,"用户名"));
+        fieldPanel.add(usernameField);
         
         //创建密码标签
         JLabel passwordLabel = new JLabel("密码");
@@ -75,9 +76,16 @@ public class LoginFrame extends JFrame {
         passwordLabel.setFont(new Font("微软雅黑",Font.BOLD,20));
         fieldPanel.add(passwordLabel);
         //创建密码输入框
-        JPasswordField passwordField = new JPasswordField();
+        passwordField = new JPasswordField();
         passwordField.setPreferredSize(new Dimension(200,30));
         passwordField.setFont(new Font("微软雅黑",Font.BOLD,20));
+        passwordField.addFocusListener(new JTextFieldHintListener(passwordField,"密码"));
+        if("密码".equals(new String(passwordField.getPassword()))) {
+            passwordField.setEchoChar((char)0);
+        }
+        else {
+            passwordField.setEchoChar('*');
+        }
         fieldPanel.add(passwordField);
         
         
@@ -100,23 +108,24 @@ public class LoginFrame extends JFrame {
         login.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(0 == idField.getText().length() || 0 == passwordField.getPassword().length) {
+                if(0 == usernameField.getText().length() || 0 == passwordField.getPassword().length) {
                     JOptionPane.showMessageDialog(LoginFrame.this,"用户名与密码不能为空");
                     return;
                 }
                 //判断登录是否成功
-                if(UserDao.login(idField.getText(), new String(passwordField.getPassword()))) {
+                if(UserDao.login(usernameField.getText(), new String(passwordField.getPassword()))) {
                     //判断是否为管理员
-                    if(UserDao.isAdmin(idField.getText())) {
-                        user = UserDao.getUser(Integer.parseInt(idField.getText()));
+                    if(UserDao.isAdmin(usernameField.getText())) {
+                        user = UserDao.getUser(usernameField.getText());
+                        LoginFrame.instance.setVisible(false);
                         AdminFrame.instance.setVisible(true);
                     } else {
-                        user = UserDao.getUser(Integer.parseInt(idField.getText()));
+                        user = UserDao.getUser(usernameField.getText());
+                        LoginFrame.instance.setVisible(false);
                         UserFrame.instance.setVisible(true);
                     }
                 } else {
                     JOptionPane.showMessageDialog(LoginFrame.this,"账号或密码错误，请重新输入！");
-                    return;
                 }
             }
         });
@@ -124,7 +133,7 @@ public class LoginFrame extends JFrame {
         reset.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                idField.setText("");
+                usernameField.setText("");
                 passwordField.setText("");
             }
         });

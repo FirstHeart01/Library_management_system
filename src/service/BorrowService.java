@@ -12,11 +12,12 @@ import java.util.List;
  * @author ZQ
  */
 public class BorrowService {
+    
     //dao层
     BorrowDao borrowDao = new BorrowDao();
 
     /**
-     * 
+     * 添加借阅记录
      * @param book
      * @return
      */
@@ -37,7 +38,7 @@ public class BorrowService {
     }
 
     /**
-     * 
+     * 删除
      * @param borrow
      */
     public void delete(Borrow borrow) {

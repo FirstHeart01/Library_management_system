@@ -1,9 +1,6 @@
 package view.listener;
 
-import view.frame.AddBookFrame;
-import view.frame.AddTypeFrame;
-import view.frame.AdminFrame;
-import view.frame.UserRegisterFrame;
+import view.frame.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -24,7 +21,8 @@ public class AdminMenuBarListener implements ActionListener {
         
         //图书类别维护
         if(i == f.editTypeItem) {
-            
+            EditTypeFrame.instance.setVisible(true);
+            EditTypeFrame.instance.updateData();
         }
         
         //图书添加
@@ -35,39 +33,35 @@ public class AdminMenuBarListener implements ActionListener {
         
         //图书维护
         if(i == f.editBookItem) {
-            
+            EditBookFrame.instance.setVisible(true);
+            EditBookFrame.instance.updateData();
         }
         
         //统计分析
+        //此界面功能还未实现
         if(i == f.borrowStatisticItem) {
             JOptionPane.showMessageDialog(f,"借阅分析");
         }
         
         //用户注册
+        //此界面功能还未实现
         if(i == f.registerItem) {
             UserRegisterFrame.instance.setVisible(true);
         }
         
         //用户管理
+        //此界面功能还未实现
         if(i == f.userManageItem) {
             JOptionPane.showMessageDialog(f,"用户管理");
         }
         
         //系统介绍
+        //此界面功能还未实现
         if(i == f.sysDescItem) {
             JOptionPane.showMessageDialog(f,"系统介绍");
         }
     }
 
-    /**
-     * 显示另一个窗体
-     * @param hideFrame
-     * @param showFrame
-     */
-    public void show(JFrame hideFrame, JFrame showFrame) {
-        hideFrame.setVisible(false);
-        showFrame.setVisible(true);
-    }
 }
 
 

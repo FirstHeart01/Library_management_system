@@ -83,7 +83,7 @@ CREATE TABLE `user`  (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (2020, '君', '1234', '1');
-INSERT INTO `user` VALUES (2021, '君', '1234', '0');
+INSERT INTO `user` VALUES (1, '2019141460343', '1234', '1');
+INSERT INTO `user` VALUES (2, '2019141460252', '1234', '0');
  
 SET FOREIGN_KEY_CHECKS = 1;

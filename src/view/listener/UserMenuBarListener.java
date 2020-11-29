@@ -28,10 +28,12 @@ public class UserMenuBarListener implements ActionListener {
             return;
         }
         //修改密码
+        //此界面功能还未实现
         if(i == f.editPassItem) {
             JOptionPane.showMessageDialog(f,"修改密码");
         }
         //系统介绍
+        //此界面功能还未实现
         if(i == f.sysDescItem) {
             JOptionPane.showMessageDialog(f, "系统介绍");
         }
