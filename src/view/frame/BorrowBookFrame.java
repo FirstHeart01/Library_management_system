@@ -1,13 +1,18 @@
 package view.frame;
 
+import entity.Book;
 import entity.BookType;
 import model.BookTableModel;
 import model.BookTypeComboBoxModel;
+import service.BookService;
+import service.BookTypeService;
 import service.BorrowService;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * @author ZQ
@@ -99,8 +104,86 @@ public class BorrowBookFrame extends JFrame {
         sp.setPreferredSize(new Dimension(750,180));
         add(sp);
         
+        //创建按钮面板
+        JPanel borrowPanel = new JPanel();
+        contentPanel.add(borrowPanel);
         
-        //创建按钮
+        //创建确认借阅按钮
+        borrowButton= new JButton("确认借阅");
+        borrowButton.setIcon(new ImageIcon(LoginFrame.class.getResource("/images/ADD.png")));
+        borrowButton.setPreferredSize(new Dimension(180,40));
+        borrowPanel.add(borrowButton);
+        
+        //添加搜索按钮事件
+        addSearchListener();
+        
+        //添加确认按钮事件
+        addBorrowListener();
+        
+        //设置窗体可见性
+        setVisible(true);
+    }
+
+    /**
+     * 获取表格选中当前行的数据
+     * @return
+     */
+    public Book getSelectBook() {
+        int index = table.getSelectedRow();
+        return BookTableModel.cs.get(index);        
+    }
+
+    /**
+     * 添加搜索按钮事件
+     */
+    public void addSearchListener() {
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //更改表格的源数据
+                table.updateUI();
+            }
+        });
+    }
+
+    /**
+     * 添加确认借阅事件按钮
+     */
+    public void addBorrowListener() {
+        borrowButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(table.getSelectedRow() == -1) {
+                    JOptionPane.showMessageDialog(BorrowBookFrame.this,"请先选择一条记录");
+                    return;
+                }
+                
+                //确认借阅操作
+                Book book = new Book();
+                
+                boolean bool = service.add(book);
+                if(bool) {
+                    JOptionPane.showMessageDialog(BorrowBookFrame.this,"借阅成功！");
+                } else {
+                    JOptionPane.showMessageDialog(BorrowBookFrame.this,"借阅失败！");
+                }
+                updateData();
+            }
+        });
+    }
+
+    /**
+     * 更新数据
+     */
+    public void updateData() {
+        BookTableModel.cs = new BookService().list();
+        table.updateUI();
+        bcm.cs = new BookTypeService().list();
+        bookTypeField.updateUI();
+    }
+
+    public static void main(String[] args) {
+        
     }
 }
 

@@ -10,7 +10,7 @@ public final class DbConn {
 
         String user = "root";
         String passwd = "ZQ_xf949789978";
-        String url = "jdbc:mysql://localhost:3306/library?serverTimezone=GMT%2B8&useSSL=false";
+        String url = "jdbc:mysql://localhost:3306/db_bms?serverTimezone=GMT%2B8&useSSL=false";
         //已加载完驱动
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
