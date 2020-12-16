@@ -2,6 +2,7 @@ package view.frame;
 
 import dao.UserDao;
 import entity.User;
+import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
 import view.listener.JTextFieldHintListener;
 
 import javax.swing.*;

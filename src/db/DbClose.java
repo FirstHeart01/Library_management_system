@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class DbClose {
     /**
-     * 关闭 添加功能 自愿
+     * 关闭 添加功能 
      * @param pstmt,rs,conn
      */
     public static void addClose(PreparedStatement pstmt, Connection conn)

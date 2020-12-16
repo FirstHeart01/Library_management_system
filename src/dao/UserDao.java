@@ -41,6 +41,29 @@ public class UserDao {
        }
        return false;
     }
+    
+    
+    public static boolean add(User user) {
+        String sql = "INSERT INTO user(userName, password, admin) VALUES(?,?,?)";
+        boolean bool = false;
+        Connection connection = DbConn.getconn();
+        
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            
+            ps.setString(1,user.getUserName());
+            ps.setString(2,user.getPassword());
+            ps.setInt(3,user.getAdmin());
+
+            int rs = ps.executeUpdate();
+            if(rs > 0)
+                bool = true;
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return bool;
+    }
 
     /**
      * 

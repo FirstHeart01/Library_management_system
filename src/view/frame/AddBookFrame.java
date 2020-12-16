@@ -81,7 +81,7 @@ public class AddBookFrame extends JFrame {
         JLabel labelBookName = new JLabel("图书名称：");
         labelBookName.setIcon(new ImageIcon(LoginFrame.class.getResource("/images/book-name-icon.png")));
         mainPanel.add(labelBookName);
-        //创建图书编号输入框
+        //创建图书名称输入框
         bookNameField = new JTextField();
         bookNameField.setPreferredSize(new Dimension(150,30));
         mainPanel.add(bookNameField);

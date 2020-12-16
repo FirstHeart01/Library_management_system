@@ -23,6 +23,9 @@ public class JTextFieldHintListener implements FocusListener {
     @Override
     public void focusGained(FocusEvent e) {
         //获取焦点时清空内容
+        if(textField instanceof JPasswordField) {
+            ((JPasswordField) textField).setEchoChar('*');
+        }
         String temp = textField.getText();
         if(temp.equals(hintText)) {
             textField.setText("");
@@ -33,6 +36,9 @@ public class JTextFieldHintListener implements FocusListener {
     @Override
     public void focusLost(FocusEvent e) {
         //失去焦点时，没有输入内容显示提示内容
+        if(textField instanceof JPasswordField) {
+            ((JPasswordField) textField).setEchoChar((char)0);
+        }
         String temp = textField.getText();
         if(temp.equals("")) {
             textField.setForeground(Color.GRAY);

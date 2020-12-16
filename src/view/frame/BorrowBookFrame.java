@@ -133,6 +133,7 @@ public class BorrowBookFrame extends JFrame {
      */
     public Book getSelectBook() {
         int index = table.getSelectedRow();
+        System.out.println(index);
         return BookTableModel.cs.get(index);        
     }
 
@@ -163,7 +164,6 @@ public class BorrowBookFrame extends JFrame {
                 
                 //确认借阅操作
                 Book book = getSelectBook();
-                
                 boolean bool = service.add(book);
                 if(bool) {
                     JOptionPane.showMessageDialog(BorrowBookFrame.this,"借阅成功！");

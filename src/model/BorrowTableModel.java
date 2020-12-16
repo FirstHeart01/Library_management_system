@@ -53,7 +53,9 @@ public class BorrowTableModel implements TableModel {
             return b.getBookBorrowDate();
         }
         if(columnIndex == 3) {
-            return new BookTypeService().getById(b.getBookTypeId()).getBookTypeName();
+            String BookTypeName = new BookTypeService().getById(b.getBookTypeId()).getBookTypeName();
+            System.out.println(BookTypeName);
+            return BookTypeName;
         }
         return null;
     }

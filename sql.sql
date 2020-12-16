@@ -5,7 +5,7 @@ SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
  
 -- ----------------------------
--- Table structure for t_book
+-- Table structure for book
 -- ----------------------------
 DROP TABLE IF EXISTS `book`;
 CREATE TABLE `book`  (
@@ -24,8 +24,8 @@ CREATE TABLE `book`  (
 -- ----------------------------
 -- Records of book
 -- ----------------------------
-INSERT INTO `book` VALUES (2001, '计算机组成原理', '朱泽旸', '2001', 1, 2004, '朱泽旸的大作');
-INSERT INTO `book` VALUES (2002, '测试书名1', 'ZQ', '2001', 1, 1976, 'ZQ测试');
+INSERT INTO `book` VALUES (1, '计算机组成原理', '朱泽旸', '2001', 1, 2004, '朱泽旸的大作');
+INSERT INTO `book` VALUES (2, '测试书名1', 'ZQ', '2001', 1, 1976, 'ZQ测试');
  
 -- ----------------------------
 -- Table structure for booktype
@@ -39,7 +39,7 @@ CREATE TABLE `booktype`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
  
 -- ----------------------------
--- Records of t_booktype
+-- Records of booktype
 -- ----------------------------
 INSERT INTO `booktype` VALUES (1, '计算机类', '计算机相关图书');
 INSERT INTO `booktype` VALUES (2, '建筑类', '建筑类相关图书');
@@ -53,9 +53,9 @@ CREATE TABLE `borrow`  (
   `user_id` int(11) NOT NULL,
   `book_id` int(11) NOT NULL,
   `bookBorrowTime` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `bookReturnTime` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `bookType_id` int(11) NULL DEFAULT NULL,
   `flag` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '1 为在借阅状态  0为归还状态',
+  `bookName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   INDEX `bookid`(`book_id`) USING BTREE,
   INDEX `typeID`(`bookType_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
@@ -63,10 +63,10 @@ CREATE TABLE `borrow`  (
 -- ----------------------------
 -- Records of borrow
 -- ----------------------------
-INSERT INTO `borrow` VALUES (15, 2001, '20200200005618', '20200215005821', 1, '0');
-INSERT INTO `borrow` VALUES (15, 2002, '20200200005618', '20200215005821', 1, '0');
-INSERT INTO `borrow` VALUES (15, 2002, '20200200005618', '20200215005821', 1, '0');
-INSERT INTO `borrow` VALUES (15, 2001, '20200200005618', '20200215005821', 1, '1');
+INSERT INTO `borrow` VALUES (2, 1, '20201216135522', 1, '0', '计算机组成原理');
+INSERT INTO `borrow` VALUES (2, 2, '20201216135522', 1, '0', '测试书名1');
+INSERT INTO `borrow` VALUES (2, 2, '20201216135522', 1, '0', '测试书名1');
+INSERT INTO `borrow` VALUES (2, 1, '20201216135522', 1, '1', '计算机组成原理');
  
 -- ----------------------------
 -- Table structure for user

@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * Borrow对象Dao层
+ * @author ZQ
  */
 public class BorrowDao {
 
@@ -19,25 +20,26 @@ public class BorrowDao {
      * @return
      */
     public boolean add(Borrow borrow) {
-        String sql = "INSERT INTO borrow VALUES(?,?,?,?,?)";
+        boolean bool = false;
+        String sql = "INSERT INTO borrow(user_id,book_id,bookBorrowTime,bookType_id,bookName) VALUES(?,?,?,?,?)";
         try {
             Connection connection = DbConn.getconn();
-            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = connection.prepareStatement(sql);
 
             ps.setInt(1,borrow.getUserId());
             ps.setInt(2,borrow.getBookId());
-            ps.setString(3,borrow.getBookName());
-            ps.setString(4,borrow.getBookBorrowDate());
-            ps.setInt(5,borrow.getBookTypeId());
+            ps.setString(3,borrow.getBookBorrowDate());
+            ps.setInt(4,borrow.getBookTypeId());
+            ps.setString(5,borrow.getBookName());
 
-            ps.executeUpdate();
-
-            ResultSet rs = ps.getGeneratedKeys();
-            return rs.next();
+            int rs = ps.executeUpdate();
+            
+            if(rs > 0)
+                bool = true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
+        return bool;
     }
 
     public List<Borrow> list() {
@@ -61,15 +63,15 @@ public class BorrowDao {
                 Borrow borrow = new Borrow();
                 int userId = LoginFrame.user.getId();
                 int bookId = rs.getInt(2);
-                String bookName = rs.getString(3);
-                String borrowDate = rs.getString(4);
-                int bookTypeId = rs.getInt(5);
+                String borrowDate = rs.getString(3);
+                int bookTypeId = rs.getInt(4);
+                String bookName = rs.getString(6);
                 
                 borrow.setUserId(userId);
                 borrow.setBookId(bookId);
-                borrow.setBookName(bookName);
                 borrow.setBookBorrowDate(borrowDate);
                 borrow.setBookTypeId(bookTypeId);
+                borrow.setBookName(bookName);
                 
                 bs.add(borrow);
             }

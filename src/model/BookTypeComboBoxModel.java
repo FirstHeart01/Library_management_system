@@ -11,7 +11,6 @@ public class BookTypeComboBoxModel implements ComboBoxModel<BookType> {
     public List<BookType> cs = new BookTypeService().list();
 
     BookType c;
-
     /**
      * 通过数组内容查找下标
      * @param bookType

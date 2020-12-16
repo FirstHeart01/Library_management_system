@@ -20,10 +20,13 @@ public class BookDao {
      * @return
      */
     public boolean add(Book book) {
+        boolean bool = false;
         Connection connection = DbConn.getconn();
-        String sql ="INSERT INTO book VALUES (null,?,?,?,?,?,?)";
+        String sql ="INSERT INTO book(bookName, bookAuthor, bookPrice, bookTypeId, BorrowingNumbers, bookDesc) VALUES" +
+                " (?,?," +
+                "?,?,?,?)";
         try {
-            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1,book.getBookName());
             ps.setString(2, book.getBookAuthor());
             ps.setString(3, book.getBookPrice());
@@ -31,15 +34,13 @@ public class BookDao {
             ps.setInt(5, book.getBookCount());
             ps.setString(6, book.getBookDesc());
 
-            ps.executeUpdate();
-
-            ResultSet rs = ps.getGeneratedKeys();
-
-            return rs.next();
+            int rs = ps.executeUpdate();
+            if(rs > 0)
+                bool = true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
+        return bool;
     }
 
     /**

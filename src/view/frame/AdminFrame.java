@@ -1,5 +1,6 @@
 package view.frame;
 
+import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
 import util.CenterPanel;
 import view.listener.AdminMenuBarListener;
 
@@ -143,7 +144,6 @@ public class AdminFrame extends JFrame {
     }
 
     public static void main(String[] args) {
-        
     }
 }
 

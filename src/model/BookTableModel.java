@@ -2,6 +2,7 @@ package model;
 
 import entity.Book;
 import service.BookService;
+import service.BookTypeService;
 
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
@@ -55,7 +56,7 @@ public class BookTableModel implements TableModel {
             return b.getBookPrice();
         }
         if(columnIndex == 4) {
-            return b.getBookTypeId();
+            return new BookTypeService().getById(b.getBookTypeId()).getBookTypeName();
         }
         if(columnIndex == 5) {
             return b.getBookCount();

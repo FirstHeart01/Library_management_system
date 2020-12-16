@@ -44,7 +44,6 @@ public class AdminMenuBarListener implements ActionListener {
         }
         
         //用户注册
-        //此界面功能还未实现
         if(i == f.registerItem) {
             UserRegisterFrame.instance.setVisible(true);
         }

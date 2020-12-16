@@ -1,7 +1,5 @@
 package entity;
 
-import java.util.Date;
-
 /**
  * Books 图书实体类
  * @author ZQ

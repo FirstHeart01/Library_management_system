@@ -1,9 +1,5 @@
 package entity;
 
-import javax.swing.border.Border;
-import javax.xml.crypto.Data;
-import java.util.Date;
-
 /**
  * BookType
  * @author 曾琪

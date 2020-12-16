@@ -9,7 +9,7 @@ import java.util.List;
 
 public class BookTypeTableModel implements TableModel {
 
-    String[] columnNames = new String[]{"编号","图书类别编号","图书类型描述"};
+    String[] columnNames = new String[]{"编号","图书类别名称","图书类型描述"};
     
     public static List<BookType> cs = new BookTypeService().list();
     
